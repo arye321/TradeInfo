@@ -65,7 +65,7 @@ end
 -- ------------------------------------------------------------------
 --  Core update function
 -- ------------------------------------------------------------------
-local function UpdateInfo()
+local function UpdateInfo(isNewTrade)
     local f = _G[FRAME_NAME]
     if not f then return end
 
@@ -76,15 +76,25 @@ local function UpdateInfo()
 
     local name = UnitName("NPC") or "Unknown"
     local classLoc, classEng = UnitClass("NPC")
-    local level = UnitLevel("NPC") or "?"
+    local level = UnitLevel("NPC") or 0
 
-    if not classLoc then
-        f.label:SetText(name)
-    else
-        f.label:SetText(format("%s – %s – %d", name, classLoc, level))
+    local displayText = name
+    local chatText = name
+
+    if classLoc and classEng then
+        local color = (customClassColors or RAID_CLASS_COLORS)[classEng]
+        local hex = color and format("|cff%02x%02x%02x", color.r * 255, color.g * 255, color.b * 255) or "|cffffffff"
+        
+        displayText = format("%s – %s – %d", name, classLoc, level)
+        chatText = format("%s - %s%s|r - %d", name, hex, classLoc, level)
     end
 
+    f.label:SetText(displayText)
     f:Show()
+
+    if isNewTrade then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFAADDFATradeInfo|r: " .. chatText)
+    end
 end
 
 -- ------------------------------------------------------------------
@@ -99,12 +109,12 @@ eventFrame:SetScript("OnEvent", function(self, event, unit)
         if not _G[FRAME_NAME] then
             CreateInfoFrame()
         end
-        UpdateInfo()
+        UpdateInfo(true)
     elseif event == "TRADE_CLOSED" then
         local f = _G[FRAME_NAME]
         if f then f:Hide() end
     elseif event == "UNIT_NAME_UPDATE" and unit == "NPC" then
-        UpdateInfo()
+        UpdateInfo(false)
     end
 end)
 
