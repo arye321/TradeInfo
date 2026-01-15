@@ -1,0 +1,8 @@
+## Interface: 11508
+## Title: TradeInfo
+## Notes: Shows trader class & level in the trade window
+## Author: YourName
+## Version: 1.0.0
+## SavedVariables: TradeInfoDB
+
+TradeInfo.lua
