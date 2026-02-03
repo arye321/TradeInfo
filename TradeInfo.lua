@@ -110,6 +110,7 @@ eventFrame:SetScript("OnEvent", function(self, event, unit)
             CreateInfoFrame()
         end
         UpdateInfo(true)
+        FlashClientIcon()
     elseif event == "TRADE_CLOSED" then
         local f = _G[FRAME_NAME]
         if f then f:Hide() end
