@@ -78,22 +78,23 @@ local function UpdateInfo(isNewTrade)
     local classLoc, classEng = UnitClass("NPC")
     local level = UnitLevel("NPC") or 0
 
+    local nameLink = format("|Hplayer:%s|h%s|h", name, name)
     local displayText = name
-    local chatText = name
+    local chatText = nameLink
 
     if classLoc and classEng then
         local color = (customClassColors or RAID_CLASS_COLORS)[classEng]
         local hex = color and format("|cff%02x%02x%02x", color.r * 255, color.g * 255, color.b * 255) or "|cffffffff"
         
         displayText = format("%s – %s – %d", name, classLoc, level)
-        chatText = format("%s - %s%s|r - %d", name, hex, classLoc, level)
+        chatText = format("[%s%s] - %s%s|r - %d",hex, nameLink, hex, classLoc, level)
     end
 
     f.label:SetText(displayText)
     f:Show()
 
     if isNewTrade then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFAADDFATradeInfo|r: " .. chatText)
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff0000>>>>|r |cFFAADDFATradeInfo|r: " .. chatText .. " |cffff0000<<<<|r")
     end
 end
 
