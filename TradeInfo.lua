@@ -80,14 +80,14 @@ local function UpdateInfo(isNewTrade)
 
     local nameLink = format("|Hplayer:%s|h%s|h", name, name)
     local displayText = name
-    local chatText = nameLink
+    local chatText = format("[|r%s|r]", nameLink)
 
     if classLoc and classEng then
         local color = (customClassColors or RAID_CLASS_COLORS)[classEng]
         local hex = color and format("|cff%02x%02x%02x", color.r * 255, color.g * 255, color.b * 255) or "|cffffffff"
         
         displayText = format("%s – %s – %d", name, classLoc, level)
-        chatText = format("[%s%s] - %s%s|r - %d",hex, nameLink, hex, classLoc, level)
+        chatText = format("[|r%s%s|r] - %s%s|r - |cffffff00%d|r", hex, nameLink, hex, classLoc, level)
     end
 
     f.label:SetText(displayText)
